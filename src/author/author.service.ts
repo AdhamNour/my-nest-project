@@ -23,8 +23,6 @@ export class AuthorService {
     try {
       return await this.authorRepo.save(authorData);
     } catch (error) {
-      console.log('error', error);
-
       if (error instanceof QueryFailedError) {
         throw new BadRequestException('Email already exists');
       }

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthorService } from './author.service';
-import { Repository } from 'typeorm';
+import { QueryFailedError, Repository } from 'typeorm';
 import { Author } from 'author/author.entity';
 
 describe('AuthorService', () => {
@@ -65,4 +65,32 @@ describe('AuthorService', () => {
     await service.deleteOne(author.id);
     expect(authorRepository.remove).toHaveBeenCalledWith(author);
   });
+  it('should throw error if author not found', async () => {
+    authorRepository.findOne.mockResolvedValue(null);
+    try {
+      await service.findOne(1);
+    } catch (error) {
+      expect(error.message).toBe('Author not found');
+    }
+  });
+  it('should throw error if email already exists', async () => {
+    const author = authors[0];
+    authorRepository.save.mockRejectedValue(new QueryFailedError('', [], { message: 'Email already exists' ,name:'QueryFailedError'}));
+    try {
+      await service.createOne(author as Author);
+    } catch (error) {
+      expect(error.message).toBe('Email already exists');
+    }
+  }
+  );
+  it('should throw error if unexpected error occurred', async () => {
+    const author = authors[0];
+    authorRepository.save.mockRejectedValue({});
+    try {
+      await service.createOne(author as Author);
+    } catch (error) {
+      expect(error.message).toBe('An unexpected error occurred');
+    }
+  }
+  );
 });
