@@ -4,7 +4,7 @@ import { DataSource, Repository } from 'typeorm';
 import { Tweet } from './tweets.entity';
 import { CreateTweetDto } from './dtos/create-tweet.dto';
 import { UpdateTweetDto } from './dtos/update-tweet.dto';
-import { Author } from 'src/author/author.entity';
+import { Author } from '../author/author.entity';
 
 @Injectable()
 export class TweetsService {
