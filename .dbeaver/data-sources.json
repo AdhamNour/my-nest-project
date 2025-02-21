@@ -1,0 +1,29 @@
+{
+	"folders": {},
+	"connections": {
+		"sqlite_jdbc-1951fc67b2b-65e809ec5d2b3728": {
+			"provider": "sqlite",
+			"driver": "sqlite_jdbc",
+			"name": "database.sqlite",
+			"save-password": true,
+			"configuration": {
+				"database": "/home/adhamnour/my-nest-project/database.sqlite",
+				"url": "jdbc:sqlite:/home/adhamnour/my-nest-project/database.sqlite",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"auth-model": "native"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}
