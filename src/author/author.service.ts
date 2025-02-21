@@ -12,16 +12,16 @@ import { QueryFailedError, Repository } from 'typeorm';
 export class AuthorService {
   constructor(
     @InjectRepository(Author)
-    private readonly authorRepository: Repository<Author>,
+    private readonly authorRepo: Repository<Author>,
   ) {}
 
   async findAll(): Promise<Author[]> {
-    return this.authorRepository.find();
+    return this.authorRepo.find();
   }
 
   async createOne(authorData: CreateAuthorDTO): Promise<Author> {
     try {
-      return await this.authorRepository.save(authorData);
+      return await this.authorRepo.save(authorData);
     } catch (error) {
       console.log('error', error);
 
@@ -32,7 +32,7 @@ export class AuthorService {
     }
   }
   async findOne(id: number): Promise<Author> {
-    const author = await this.authorRepository.findOne({ where: { id } });
+    const author = await this.authorRepo.findOne({ where: { id } });
     if (!author) {
       throw new BadRequestException('Author not found');
     }
@@ -42,11 +42,11 @@ export class AuthorService {
   async updateOne(id: number, updateData: Partial<CreateAuthorDTO>): Promise<Author> {
     const author = await this.findOne(id);
     Object.assign(author, updateData);
-    return this.authorRepository.save(author);
+    return this.authorRepo.save(author);
   }
 
   async deleteOne(id: number): Promise<void> {
     const author = await this.findOne(id);
-    await this.authorRepository.remove(author);
+    await this.authorRepo.remove(author);
   }
 }
